@@ -1,0 +1,14 @@
+en:
+  lita:
+    handlers:
+      activedirectory:
+        help:
+          user_locked?:
+            syntax: is <username> locked?
+            desc: queries active directory to see if a user is locked
+        replies:
+          user_locked?:
+            working: let me check on that
+            locked: "looks like '%{user}' is locked"
+            notlocked: "'%{user}' is not locked"
+            error: "'%{user}' does not appear to be a valid user"
