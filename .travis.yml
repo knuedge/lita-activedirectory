@@ -1,8 +1,18 @@
 language: ruby
+sudo: required
 rvm:
-  - 2.0.0
+- 2.2
+- 2.3
 script: bundle exec rake
 before_install:
-  - gem update --system
+- gem update --system
 services:
-  - redis-server
+- redis-server
+deploy:
+  provider: rubygems
+  api_key:
+    secure: E0wrzWtW2hG8d1l3+E48PHsY3MCHm8qDwoIjJKAcRD8xr1A5YmeDt1bpmEy/mVu3iz9LnwALGory/AoIjtIp/gpeSuS+tJw4+dOHuYvlJNrvxmnBgyA0VJJn+8ATIs243zLRZ1OxJFJ0iR8V1MbzCoBREq30h88yCHVt+BmDeYLuguqOG9TSGwGtBph54Cfj2fvVpu0sSqIgQrRU5qXYt7UPl0r5ktcWOiao8zdLE1vEw3kLsRsFYk8vlp04ui5qMkEvOX+P9sfSK6J//GxVeJL51LUraLA7jzhgvX6q6snyj3aYtBEaJuyGR0Dg+flDG6hyjF1BubbzRge/9KRSnWFTNkgVw2awAeX3hUuKp5Apm5pMYi739hpIZKPCnnSFd6jvlX7yMjhs/hpc37RaODA2wj6W8xH/HrXWHiOl+bBcPlc/oIPiVHTwYbiTQQsq/ajlz5zrQu3HS8PC5h0x3nwUIUuQf86wI5bNBa+xxwUdBKVeKoDhuXAgXgyqyn4ET13DE6v74I7LKwN13KGN9K6NQRebs+lEvL1UwKno0FYIp1uZ3XkZP3wrbqeBX35+8I6ruVc6RCysaHYNGZWm04kCsk2tceinVQLk+c15l0BSv4twXj8XXwVmaUtks349HQKmBWpp1GBu4uK5P/50Yi0rDaJZpjcAra2FwSTa/oo=
+  gem: lita-activedirectory
+  on:
+    tags: true
+    repo: knuedge/lita-activedirectory

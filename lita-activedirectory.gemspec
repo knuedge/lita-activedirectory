@@ -14,6 +14,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '~> 2.2'
+
   spec.add_runtime_dependency 'lita', '>= 4.7'
   spec.add_runtime_dependency 'cratus'
 
@@ -25,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'travis', '~> 1.8'
 end
