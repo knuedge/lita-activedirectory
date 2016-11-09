@@ -6,7 +6,7 @@ module Utils
         host: config.host,
         port: config.port,
         user_basedn: config.user_basedn,
-        basedn: config.basedn
+        basedn: config.basedn,
         username: config.username,
         password: config.password
       }
