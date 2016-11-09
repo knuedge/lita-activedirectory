@@ -1,5 +1,5 @@
 # lita-activedirectory
-
+[![Build Status](https://travis-ci.org/knuedge/lita-activedirectory.svg?branch=master)](https://travis-ci.org/knuedge/lita-activedirectory)
 
 A [Lita](https://www.lita.io/) handler plugin for basic interactions with Active Directory.
 
