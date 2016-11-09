@@ -5,12 +5,9 @@ module Utils
       options = {
         host: config.host,
         port: config.port,
-        base: config.basedn,
-        auth: {
-          method: :simple,
-          username: config.username,
-          password: config.password
-        }
+        basedn: config.basedn,
+        username: config.username,
+        password: config.password
       }
       Cratus.config.merge(options)
       Cratus::LDAP.connect
