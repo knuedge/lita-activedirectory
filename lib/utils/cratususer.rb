@@ -5,7 +5,7 @@ module Utils
       options = {
         host: config.host,
         port: config.port,
-        basedn: config.basedn,
+        user_basedn: config.basedn,
         username: config.username,
         password: config.password
       }
