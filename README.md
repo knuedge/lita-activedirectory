@@ -1,7 +1,5 @@
 # lita-activedirectory
 
-[![Build Status](https://travis-ci.org/dschaaff/lita-activedirectory.png?branch=master)](https://travis-ci.org/dschaaff/lita-activedirectory)
-[![Coverage Status](https://coveralls.io/repos/dschaaff/lita-activedirectory/badge.png)](https://coveralls.io/r/dschaaff/lita-activedirectory)
 
 A [Lita](https://www.lita.io/) handler plugin for basic interactions with Active Directory.
 
