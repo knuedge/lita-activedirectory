@@ -12,7 +12,7 @@ module Utils
           password: config.password
         }
       }
-      Cratus::Config.merge(options)
+      Cratus.config.merge(options)
       Cratus::LDAP.connect
       user = Cratus::User.new(username.to_s)
       user ? user.locked? : user
