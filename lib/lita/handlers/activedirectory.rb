@@ -5,6 +5,7 @@ module Lita
       config :host, required: true, type: String
       config :port, required: true, type: Integer, default: 389
       config :basedn, required: true, type: String
+      config :user_basedn, required: true, type: String
       config :username, required: true, type: String
       config :password, required: true, type: String
 
