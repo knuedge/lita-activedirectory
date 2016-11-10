@@ -21,11 +21,12 @@ gem "lita-activedirectory"
 * `config.handlers.activedirectory.password` - Password for connecting to LDAP
 
 ## Usage
-
-Check if a user account is locked out
+*username expects the samaccount name*
+### Check if a user account is locked out
 `is <username> locked?`
 
-Unlock a user account
+### Unlock a user account
 `unlock <username>`
 
-Username should take the form of the samaccount name, ie `jdoe`
+The user account specified in `config.handlers.activedirectory.username` must have permission to write the lockouttime attribute for unlocking to succeed. We leave it up to you to secure this account accordingly. 
+
