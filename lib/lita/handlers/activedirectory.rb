@@ -28,34 +28,34 @@ module Lita
       def user_locked?(response)
         user = response.matches[0][1]
         response.reply_with_mention(t('replies.user_locked?.working'))
-        handle_user_query(user_query(user))
+        handle_user_query(response, user, user_query(user))
       end
 
-      def handle_user_query(username)
+      def handle_user_query(response, user, username)
         case username
         when true
           response.reply_with_mention(
-            t('replies.user_locked?.locked', user: username)
+            t('replies.user_locked?.locked', user: user)
           )
         when false
           response.reply_with_mention(
-            t('replies.user_locked?.notlocked', user: username)
+            t('replies.user_locked?.notlocked', user: user)
           )
         when nil
           response.reply_with_mention(
-            t('replies.user_locked?.error', user: username)
+            t('replies.user_locked?.error', user: user)
           )
         end
       end
 
-      def unlock
+      def unlock(response)
         user = response.matches[0][1]
         response.reply_with_mention(t('replies.unlock.working'))
         user_result = user_query(user)
         if user_result
           unlock_user(user)
         else
-          handle_user_query(user_result)
+          handle_user_query(response, user, user_result)
         end
       end
 
