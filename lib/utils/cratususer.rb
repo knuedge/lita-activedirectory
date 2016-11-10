@@ -22,7 +22,7 @@ module Utils
 
     def unlock_user(username)
       ldap = Cratus::LDAP.connection
-      ldap.replace_attribute Cratus::User.new(username.to_s).dn, :lockedtime, '0'
+      ldap.replace_attribute Cratus::User.new(username.to_s).dn, :lockouttime, '0'
     end
   end
 end
