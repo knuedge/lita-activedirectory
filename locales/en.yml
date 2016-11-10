@@ -17,3 +17,5 @@ en:
             error: "'%{user}' does not appear to be a valid user"
           unlock:
             working: lets see what we can do
+            success: "'%{user}' has been unlocked"
+            error: "could not unlock '%{user}', check active directory directly"
