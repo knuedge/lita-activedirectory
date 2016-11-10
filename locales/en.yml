@@ -18,4 +18,4 @@ en:
           unlock:
             working: lets see what we can do
             success: "'%{user}' has been unlocked"
-            error: "could not unlock '%{user}', check active directory directly"
+            fail: "could not unlock '%{user}', check active directory directly"
