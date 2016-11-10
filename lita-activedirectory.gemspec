@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-activedirectory'
-  spec.version       = '0.0.8'
+  spec.version       = '0.0.9'
   spec.authors       = ['Daniel Schaaff']
   spec.email         = ['dschaaff@knuedge.com']
   spec.description   = 'ldap/active directory instructions for Lita'
