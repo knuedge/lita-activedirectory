@@ -6,9 +6,14 @@ en:
           user_locked?:
             syntax: is <username> locked?
             desc: queries active directory to see if a user is locked
+          unlock:
+            syntax: unlock <username>
+            desc: unlocks an active directory user account
         replies:
           user_locked?:
             working: let me check on that
             locked: "looks like '%{user}' is locked"
             notlocked: "'%{user}' is not locked"
             error: "'%{user}' does not appear to be a valid user"
+          unlock:
+            working: lets see what we can do

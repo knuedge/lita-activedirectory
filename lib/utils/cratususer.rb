@@ -12,8 +12,17 @@ module Utils
       }
       Cratus.config.merge(options)
       Cratus::LDAP.connect
-      user = Cratus::User.new(username.to_s)
+      user = begin
+        Cratus::User.new(username.to_s)
+      rescue
+        nil
+      end
       user ? user.locked? : user
+    end
+
+    def unlock_user(username)
+      ldap = Cratus::LDAP.connection
+      ldap.replace_attribute username.dn, :lockedtime, '0'
     end
   end
 end
