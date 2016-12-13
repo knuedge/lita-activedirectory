@@ -1,7 +1,7 @@
 module Utils
   # piggy back on cratus for ldap work
   module Cratususer
-    def user_query(username)
+    def cratus_connect
       options = {
         host: config.host,
         port: config.port,
@@ -12,12 +12,27 @@ module Utils
       }
       Cratus.config.merge(options)
       Cratus::LDAP.connect
+    end
+
+    def user_query(username)
+      cratus_connect
       user = begin
         Cratus::User.new(username.to_s)
       rescue
         nil
       end
       user ? user.locked? : user
+    end
+
+    def user_groups_query(username)
+      cratus_connect
+      user = begin
+        Cratus::User.new(username.to_s)
+      rescue
+        nil
+      end
+      groups = user.member_of
+      groups.each(&:name)
     end
 
     def unlock_user(username)

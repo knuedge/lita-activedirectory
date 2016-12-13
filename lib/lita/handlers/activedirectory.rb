@@ -23,6 +23,13 @@ module Lita
         help: { t('help.unlock.syntax') => t('help.unlock.desc') }
       )
 
+      route(
+        /^(\S+)\s+(groups)/i,
+        :user_groups,
+        command: true,
+        help: { t('help.user_groups.syntax') => t('help.user_groups.desc') }
+      )
+
       include ::Utils::Cratususer
 
       def user_locked?(response)
@@ -42,7 +49,31 @@ module Lita
         end
       end
 
+      def user_groups(response)
+        user = response.matches[0][0]
+        response.reply_with_mention(t('replies.user_groups.working'))
+        group_results = user_groups_query(user)
+        handle_user_group_query(response, user, group_results)
+      end
+
       private
+
+      def handle_user_group_query(response, user, result)
+        case result
+        when true
+          response.reply(
+            t('replies.user_groups.success', user: user), result.join("\n")
+          )
+        when false
+          respone.reply_with_mention(
+            t('replies.user_groups.not_found', user: user)
+          )
+        when nil
+          response.reply_with_mention(
+            t('replies.user_groups.error', user: user)
+          )
+        end
+      end
 
       def handle_user_query(response, user, result)
         case result

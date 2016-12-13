@@ -9,6 +9,9 @@ en:
           unlock:
             syntax: unlock <username>
             desc: unlocks an active directory user account
+          user_groups:
+            syntax: <username> user_groups
+            desc: lists all group memberships for the given username
         replies:
           user_locked?:
             working: let me check on that
@@ -19,3 +22,8 @@ en:
             working: lets see what we can do
             success: "'%{user}' has been unlocked"
             fail: "could not unlock '%{user}', check active directory directly"
+          user_groups:
+            working: Give me a second to search
+            success: "'%{user}' is a member of"
+            not_found: "could not find any groups that '%{user}' is a member of"
+            error: "That did not work, double check the '%{user}' is a valid samAccountName"
