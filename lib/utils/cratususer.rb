@@ -32,7 +32,7 @@ module Utils
         nil
       end
       groups = user.member_of
-      groups.each(&:name)
+      groups.map(&:name)
     end
 
     def unlock_user(username)
