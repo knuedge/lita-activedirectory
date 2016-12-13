@@ -10,7 +10,7 @@ en:
             syntax: unlock <username>
             desc: unlocks an active directory user account
           user_groups:
-            syntax: <username> user_groups
+            syntax: <username> groups
             desc: lists all group memberships for the given username
         replies:
           user_locked?:

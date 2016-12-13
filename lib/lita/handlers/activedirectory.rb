@@ -53,7 +53,13 @@ module Lita
         user = response.matches[0][0]
         response.reply_with_mention(t('replies.user_groups.working'))
         group_results = user_groups_query(user)
-        handle_user_group_query(response, user, group_results)
+        if group_results.nil?
+          response.reply_with_mention(
+            t('replies.user_groups.error', user: user)
+          )
+        else
+          response.reply user_groups
+        end
       end
 
       private
@@ -71,23 +77,6 @@ module Lita
         when nil
           response.reply_with_mention(
             t('replies.user_groups.error', user: user)
-          )
-        end
-      end
-
-      def handle_user_query(response, user, result)
-        case result
-        when true
-          response.reply_with_mention(
-            t('replies.user_locked?.locked', user: user)
-          )
-        when false
-          response.reply_with_mention(
-            t('replies.user_locked?.notlocked', user: user)
-          )
-        when nil
-          response.reply_with_mention(
-            t('replies.user_locked?.error', user: user)
           )
         end
       end
