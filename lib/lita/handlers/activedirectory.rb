@@ -58,7 +58,7 @@ module Lita
             t('replies.user_groups.error', user: user)
           )
         else
-          response.reply user_groups
+          response.reply group_results
         end
       end
 
