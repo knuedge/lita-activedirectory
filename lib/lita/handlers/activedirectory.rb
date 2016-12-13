@@ -65,19 +65,19 @@ module Lita
 
       private
 
-      def handle_user_group_query(response, user, result)
+      def handle_user_query(response, user, result)
         case result
         when true
-          response.reply(
-            t('replies.user_groups.success', user: user), result.join("\n")
+          response.reply_with_mention(
+            t('replies.user_locked?.locked', user: user)
           )
         when false
-          respone.reply_with_mention(
-            t('replies.user_groups.not_found', user: user)
+          response.reply_with_mention(
+            t('replies.user_locked?.notlocked', user: user)
           )
         when nil
           response.reply_with_mention(
-            t('replies.user_groups.error', user: user)
+            t('replies.user_locked?.error', user: user)
           )
         end
       end
