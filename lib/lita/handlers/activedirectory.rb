@@ -11,14 +11,14 @@ module Lita
       config :password, required: true, type: String
 
       route(
-        /(is)\s+(\S+)\s+(locked(\?)?)/i,
+        /^(is)\s+(\S+)\s+(locked(\?)?)/i,
         :user_locked?,
         command: true,
         help: { t('help.user_locked?.syntax') => t('help.user_locked?.desc') }
       )
 
       route(
-        /(unlock)\s+(\S+)/i,
+        /^(unlock)\s+(\S+)/i,
         :unlock,
         command: true,
         help: { t('help.unlock.syntax') => t('help.unlock.desc') }
