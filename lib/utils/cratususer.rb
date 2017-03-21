@@ -27,24 +27,26 @@ module Utils
 
     def user_groups_query(username)
       cratus_connect
-      user = begin
-        Cratus::User.new(username.to_s)
+      begin
+        user = Cratus::User.new(username.to_s)
+        raise 'NoGroups' unless user
+        groups = user.member_of
+        groups.map(&:name).join("\n")
       rescue
         nil
       end
-      groups = user.member_of
-      groups.map(&:name).join("\n")
     end
 
     def group_mem_query(groupname)
       cratus_connect
-      group = begin
-        Cratus::Group.new(groupname.to_s)
+      begin
+        group = Cratus::Group.new(groupname.to_s)
+        raise 'InvalidGroup' unless group
+        members = group.members
+        members.map(&:fullname).join("\n")
       rescue
         nil
       end
-      members = group.members
-      members.map(&:fullname).join("\n")
     end
 
     def unlock_user(username)
