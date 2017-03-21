@@ -76,7 +76,7 @@ module Lita
         result = group_mem_query(group)
         if result.nil?
           response.reply_with_mention(
-            t('replies.group_members.error, group: group')
+            t('replies.group_members.error', group: group)
           )
         else
           response.reply result

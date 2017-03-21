@@ -29,7 +29,7 @@ en:
             working: Give me a second to search
             success: "'%{user}' is a member of"
             not_found: "could not find any groups that '%{user}' is a member of"
-            error: "That did not work, double check the '%{user}' is a valid samAccountName"
+            error: "That did not work, double check that '%{user}' is a valid samAccountName"
           group_members:
             working: Give me a second to search
             error: "That did not work, double check the '%{group}' is a valid group name"
