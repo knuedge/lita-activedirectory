@@ -12,6 +12,9 @@ en:
           user_groups:
             syntax: <username> groups
             desc: lists all group memberships for the given username
+          group_members:
+            syntax: group <groupname> members
+            desc: lists all members of the given group
         replies:
           user_locked?:
             working: let me check on that
@@ -27,3 +30,6 @@ en:
             success: "'%{user}' is a member of"
             not_found: "could not find any groups that '%{user}' is a member of"
             error: "That did not work, double check the '%{user}' is a valid samAccountName"
+          group_members:
+            working: Give me a second to search
+            error: "That did not work, double check the '%{group}' is a valid group name"

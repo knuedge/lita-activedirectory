@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-activedirectory'
-  spec.version       = '0.2.6'
+  spec.version       = '0.2.7'
   spec.authors       = ['Daniel Schaaff']
   spec.email         = ['dschaaff@knuedge.com']
   spec.description   = 'ldap/active directory instructions for Lita'
@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack-test'
   spec.add_development_dependency 'rspec', '>= 3.0.0'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'travis', '~> 1.8'

@@ -31,6 +31,13 @@ module Lita
         help: { t('help.user_groups.syntax') => t('help.user_groups.desc') }
       )
 
+      route(
+        /^(group)\s+(\S+)\s+(members)$/i,
+        :group_members,
+        command: true,
+        help: { t('help.group_members.syntax') => t('help.group_members.desc') }
+      )
+
       include ::Utils::Cratususer
 
       def user_locked?(response)
@@ -60,6 +67,19 @@ module Lita
           )
         else
           response.reply group_results
+        end
+      end
+
+      def group_members(response)
+        group = response.matches[0][1]
+        response.reply_with_mention(t('replies.group_members.working'))
+        result = group_mem_query(group)
+        if result.nil?
+          response.reply_with_mention(
+            t('replies.group_members.error, group: group')
+          )
+        else
+          response.reply result
         end
       end
 

@@ -15,6 +15,7 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
     is_expected.to route_command('is jdoe locked?').to(:user_locked?)
     is_expected.to route_command('unlock jdoe').to(:unlock)
     is_expected.to route_command('jdoe groups').to(:user_groups)
+    is_expected.to route_command('group foo members').to(:group_members)
   end
 
   let(:locked_user) do

@@ -33,4 +33,7 @@ The user account specified in `config.handlers.activedirectory.username` must ha
 ### List a User's Group Memberships
 `<username> groups>`
 
+### List a Group's Members
+`group <groupname> members`
+
 

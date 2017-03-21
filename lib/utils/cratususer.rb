@@ -36,6 +36,17 @@ module Utils
       groups.map(&:name).join("\n")
     end
 
+    def group_mem_query(groupname)
+      cratus_connect
+      group = begin
+        Cratus::Group.new(groupname.to_s)
+      rescue
+        nil
+      end
+      members = group.members
+      members.map(&:fullname).join("\n")
+    end
+
     def unlock_user(username)
       ldap = Cratus::LDAP.connection
       ldap.replace_attribute Cratus::User.new(username.to_s).dn, :lockouttime, '0'
