@@ -21,6 +21,7 @@ module Lita
         /^(unlock)\s+(\S+)/i,
         :unlock,
         command: true,
+        restrict_to: :ad_admins,
         help: { t('help.unlock.syntax') => t('help.unlock.desc') }
       )
 
