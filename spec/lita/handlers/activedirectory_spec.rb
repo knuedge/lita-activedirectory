@@ -10,14 +10,15 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
     registry.config.handlers.activedirectory.password = 'pass'
   end
 
+  let(:lita_user) { Lita::User.create('User', name: 'A User', mention_name: 'user') }
+
   it 'should have the necessary routes' do
     is_expected.to route_command('is jdoe locked').to(:user_locked?)
     is_expected.to route_command('is jdoe locked?').to(:user_locked?)
-    is_expected.to route_command('unlock jdoe').to(:unlock)
+    is_expected.to route_command('unlock jdoe').with_authorization_for(:ad_admins).to(:unlock)
     is_expected.to route_command('jdoe groups').to(:user_groups)
     is_expected.to route_command('group foo members').to(:group_members)
   end
-
   let(:locked_user) do
     testuser = instance_double(
       'Cratus::User',
@@ -61,17 +62,20 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
   end
 
   describe '#unlock' do
+    before do
+      robot.auth.add_user_to_group!(lita_user, :ad_admins)
+    end
     it 'unlocks the user when locked' do
       allow(Cratus::User).to receive(:new).and_return(locked_user)
       allow(Cratus::LDAP.connection).to receive(:replace_attribute).and_return(true)
-      send_command('unlock jdoe')
+      send_command('unlock jdoe', as: lita_user)
       expect(replies.first).to eq('lets see what we can do')
       expect(replies.last).to eq("'jdoe' has been unlocked")
     end
     it 'lets you know if the user is not locked' do
       allow(Cratus::User).to receive(:new).and_return(unlocked_user)
       allow(Cratus::LDAP.connection).to receive(:replace_attribute).and_return(true)
-      send_command('unlock jdoe')
+      send_command('unlock jdoe', as: lita_user)
       expect(replies.first).to eq('lets see what we can do')
       expect(replies.last).to eq("'jdoe' is not locked")
     end

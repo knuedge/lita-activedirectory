@@ -28,6 +28,8 @@ gem "lita-activedirectory"
 ### Unlock a user account
 `unlock <username>`
 
+Requires membership in `ad_admins` authorization group.
+
 The user account specified in `config.handlers.activedirectory.username` must have permission to write the lockouttime attribute for unlocking to succeed. We leave it up to you to secure this account accordingly. 
 
 ### List a User's Group Memberships
