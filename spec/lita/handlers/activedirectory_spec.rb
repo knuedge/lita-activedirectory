@@ -25,6 +25,8 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       lockouttime: '124',
       locked?: true
     )
+    allow(Cratus::LDAP).to receive(:connect).and_return(true)
+    allow(Cratus::LDAP).to receive(:connection).and_return(true)
     testuser
   end
 
@@ -35,6 +37,8 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       lockouttime: '0',
       locked?: false
     )
+    allow(Cratus::LDAP).to receive(:connect).and_return(true)
+    allow(Cratus::LDAP).to receive(:connection).and_return(true)
     testuser
   end
 
@@ -57,8 +61,6 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
 
   describe '#unlock' do
     it 'unlocks the user when locked' do
-      allow(Cratus::LDAP).to receive(:connect).and_return(true)
-      allow(Cratus::LDAP).to receive(:connection).and_return(true)
       allow(Cratus::User).to receive(:new).and_return(locked_user)
       allow(Cratus::LDAP.connection).to receive(:replace_attribute).and_return(true)
       send_command('unlock jdoe')
@@ -66,8 +68,6 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       expect(replies.last).to eq("'jdoe' has been unlocked")
     end
     it 'lets you know if the user is not locked' do
-      allow(Cratus::LDAP).to receive(:connect).and_return(true)
-      allow(Cratus::LDAP).to receive(:connection).and_return(true)
       allow(Cratus::User).to receive(:new).and_return(unlocked_user)
       allow(Cratus::LDAP.connection).to receive(:replace_attribute).and_return(true)
       send_command('unlock jdoe')
