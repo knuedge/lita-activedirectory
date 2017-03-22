@@ -34,6 +34,7 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
     testuser = instance_double(
       'Cratus::User',
       dn: 'cn=jdoe,dc=example,dc=com',
+      member_of: "['cn=foo,dc=example,dc=com','cn=bar,dc=example,dc=com']",
       lockouttime: '0',
       locked?: false
     )
@@ -73,6 +74,21 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       send_command('unlock jdoe')
       expect(replies.first).to eq('lets see what we can do')
       expect(replies.last).to eq("'jdoe' is not locked")
+    end
+  end
+
+  describe '#user_groups' do
+    it 'should return proper error mesage' do
+      allow(Cratus::User).to receive(:new).and_return(unlocked_user)
+      send_command('fbar groups')
+      expect(replies.first).to eq('Give me a second to search')
+      expect(replies.last)
+        .to eq("That did not work, double check that 'fbar' is a valid samAccountName")
+    end
+    it 'should return group membership' do
+      allow(Cratus::User).to receive(:new).and_return(unlocked_user)
+      send_command('fjdoe groups')
+      expect(replies.first).to eq('Give me a second to search')
     end
   end
 end
