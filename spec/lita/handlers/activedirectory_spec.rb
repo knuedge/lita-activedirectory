@@ -19,41 +19,71 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
     is_expected.to route_command('jdoe groups').to(:user_groups)
     is_expected.to route_command('group foo members').to(:group_members)
   end
-  let(:locked_user) do
-    testuser = instance_double(
-      'Cratus::User',
-      dn: 'cn=jdoe,dc=example,dc=com',
-      lockouttime: '124',
-      locked?: true
+
+  let(:fake_group1) do
+    instance_double(
+      'Cratus::Group',
+      name: 'lame_group1',
+      members: [fake_user]
     )
-    allow(Cratus::LDAP).to receive(:connect).and_return(true)
-    allow(Cratus::LDAP).to receive(:connection).and_return(true)
-    testuser
   end
 
-  let(:unlocked_user) do
-    testuser = instance_double(
+  let(:fake_group2) do
+    instance_double(
+      'Cratus::Group',
+      name: 'lame_group2'
+    )
+  end
+
+  let(:fake_user) do
+    allow(Cratus::LDAP).to receive(:connect).and_return(true)
+    allow(Cratus::LDAP).to receive(:connection).and_return(true)
+    instance_double(
       'Cratus::User',
-      dn: 'cn=jdoe,dc=example,dc=com',
-      member_of: "['cn=foo,dc=example,dc=com','cn=bar,dc=example,dc=com']",
+      dn: 'cn=fbar,dc=example,dc=com',
+      username: 'fabar',
+      fullname: 'Foo Bar',
+      member_of: [],
       lockouttime: '0',
       locked?: false
     )
+  end
+
+  let(:locked_user) do
+    instance_double(
+      'Cratus::User',
+      dn: 'cn=jdoe,dc=example,dc=com',
+      member_of: [fake_group1, fake_group2],
+      lockouttime: '124',
+      locked?: true
+    )
+  end
+
+  let(:false_user) do
     allow(Cratus::LDAP).to receive(:connect).and_return(true)
     allow(Cratus::LDAP).to receive(:connection).and_return(true)
-    testuser
+    nil
+  end
+
+  let(:unlocked_user) do
+    instance_double(
+      'Cratus::User',
+      dn: 'cn=jdoe,dc=example,dc=com',
+      username: 'jdoe',
+      member_of: [fake_group1, fake_group2],
+      lockouttime: '0',
+      locked?: false
+    )
   end
 
   describe '#user_locked?' do
     it 'lets you know if the user is locked' do
-      allow(Cratus::LDAP).to receive(:connect).and_return(true)
       allow(Cratus::User).to receive(:new).and_return(locked_user)
       send_command('is jdoe locked?')
       expect(replies.first).to eq('let me check on that')
       expect(replies.last).to eq("looks like 'jdoe' is locked")
     end
     it 'lets you know if a user is not locked' do
-      allow(Cratus::LDAP).to receive(:connect).and_return(true)
       allow(Cratus::User).to receive(:new).and_return(unlocked_user)
       send_command('is jdoe locked?')
       expect(replies.first).to eq('let me check on that')
@@ -83,7 +113,7 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
 
   describe '#user_groups' do
     it 'should return proper error mesage' do
-      allow(Cratus::User).to receive(:new).and_return(unlocked_user)
+      allow(Cratus::User).to receive(:new).and_return(false_user)
       send_command('fbar groups')
       expect(replies.first).to eq('Give me a second to search')
       expect(replies.last)
@@ -91,8 +121,18 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
     end
     it 'should return group membership' do
       allow(Cratus::User).to receive(:new).and_return(unlocked_user)
-      send_command('fjdoe groups')
+      send_command('jdoe groups')
       expect(replies.first).to eq('Give me a second to search')
+      expect(replies.last).to eq("lame_group1\nlame_group2")
+    end
+  end
+
+  describe '#group_members' do
+    it 'should return members of the group' do
+      allow(Cratus::Group).to receive(:new).and_return(fake_group1)
+      send_command('group fake_group1 members')
+      expect(replies.first).to eq('Give me a second to search')
+      expect(replies.last).to eq('Foo Bar')
     end
   end
 end
