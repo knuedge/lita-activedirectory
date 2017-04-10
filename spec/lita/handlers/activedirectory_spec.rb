@@ -22,6 +22,10 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       .with_authorization_for(:ad_admins).to(:add_group_member)
     is_expected.to route_command('remove foo from bar')
       .with_authorization_for(:ad_admins).to(:remove_group_member)
+    is_expected.to route_command('disable user foo')
+      .with_authorization_for(:ad_admins).to(:disable_user)
+    is_expected.to route_command('enable user foo')
+      .with_authorization_for(:ad_admins).to(:enable_user)
   end
 
   let(:fake_group1) do
@@ -49,7 +53,9 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       fullname: 'Foo Bar',
       member_of: [],
       lockouttime: '0',
-      locked?: false
+      locked?: false,
+      disable: true,
+      enable: true
     )
   end
 
@@ -151,6 +157,34 @@ describe Lita::Handlers::Activedirectory, lita_handler: true do
       send_command('remove jdoe from testgroup', as: lita_user)
       expect(replies.first).to eq('Give me just a second to remove that user from the group')
       expect(replies.last).to eq("'jdoe' is no longer a member of 'testgroup'")
+    end
+  end
+
+  describe '#disable_user' do
+    before do
+      robot.auth.add_user_to_group!(lita_user, :ad_admins)
+    end
+    it 'disables a user' do
+      allow(Cratus::LDAP).to receive(:connect).and_return(true)
+      allow(Cratus::LDAP).to receive(:connection).and_return(true)
+      allow(Cratus::User).to receive(:new).and_return(fake_user)
+      send_command('disable user jdoe', as: lita_user)
+      expect(replies.first).to eq("Let's stop that user from logging in then")
+      expect(replies.last).to eq("'jdoe' is now disabled")
+    end
+  end
+
+  describe '#enable_user' do
+    before do
+      robot.auth.add_user_to_group!(lita_user, :ad_admins)
+    end
+    it 'enables a user' do
+      allow(Cratus::LDAP).to receive(:connect).and_return(true)
+      allow(Cratus::LDAP).to receive(:connection).and_return(true)
+      allow(Cratus::User).to receive(:new).and_return(fake_user)
+      send_command('enable user jdoe', as: lita_user)
+      expect(replies.first).to eq("I'll allow this user to login again")
+      expect(replies.last).to eq("'jdoe' is now enabled")
     end
   end
 
