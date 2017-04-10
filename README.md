@@ -30,7 +30,7 @@ gem "lita-activedirectory"
 
 Requires membership in `ad_admins` authorization group.
 
-The user account specified in `config.handlers.activedirectory.username` must have permission to write the lockouttime attribute for unlocking to succeed. We leave it up to you to secure this account accordingly. 
+The user account specified in `config.handlers.activedirectory.username` must have permission to write the lockouttime attribute for unlocking to succeed. We leave it up to you to secure this account accordingly.
 
 ### List a User's Group Memberships
 `<username> groups>`
@@ -38,4 +38,16 @@ The user account specified in `config.handlers.activedirectory.username` must ha
 ### List a Group's Members
 `group <groupname> members`
 
+### Add a User to a Group
+`add <username> to <groupname>`
 
+Requires membership in `ad_admins` authorization group.
+
+The user account specified in `config.handlers.activedirectory.username` must have permission to write the member attribute on groups for the membership change to succeed. We leave it up to you to secure this account accordingly.
+
+### Remove a User from a Group
+`remove <username> from <groupname>`
+
+Requires membership in `ad_admins` authorization group.
+
+The user account specified in `config.handlers.activedirectory.username` must have permission to write the member attribute on groups for the membership change to succeed. We leave it up to you to secure this account accordingly.

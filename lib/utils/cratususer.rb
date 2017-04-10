@@ -49,9 +49,39 @@ module Utils
       end
     end
 
+    def add_user_to_group(username, groupname)
+      cratus_connect
+      begin
+        user  = Cratus::User.new(username.to_s)
+        group = Cratus::Group.new(groupname.to_s)
+        raise 'InvalidUser' unless user
+        raise 'InvalidGroup' unless group
+        group.add_user(user)
+      rescue
+        nil
+      end
+    end
+
+    def remove_user_from_group(username, groupname)
+      cratus_connect
+      begin
+        user  = Cratus::User.new(username.to_s)
+        group = Cratus::Group.new(groupname.to_s)
+        raise 'InvalidUser' unless user
+        raise 'InvalidGroup' unless group
+        group.remove_user(user)
+      rescue
+        nil
+      end
+    end
+
     def unlock_user(username)
-      ldap = Cratus::LDAP.connection
-      ldap.replace_attribute Cratus::User.new(username.to_s).dn, :lockouttime, '0'
+      cratus_connect
+      begin
+        Cratus::User.new(username.to_s).unlock
+      rescue
+        nil
+      end
     end
   end
 end

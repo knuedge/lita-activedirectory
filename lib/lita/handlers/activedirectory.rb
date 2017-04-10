@@ -39,6 +39,22 @@ module Lita
         help: { t('help.group_members.syntax') => t('help.group_members.desc') }
       )
 
+      route(
+        /^remove\s+(\S+)\s+from\s+(\S+)$/i,
+        :remove_group_member,
+        command: true,
+        restrict_to: :ad_admins,
+        help: { t('help.remove_member.syntax') => t('help.remove_member.desc') }
+      )
+
+      route(
+        /^add\s+(\S+)\s+to\s+(\S+)$/i,
+        :add_group_member,
+        command: true,
+        restrict_to: :ad_admins,
+        help: { t('help.add_member.syntax') => t('help.add_member.desc') }
+      )
+
       include ::Utils::Cratususer
 
       def user_locked?(response)
@@ -82,6 +98,36 @@ module Lita
         else
           response.reply result
         end
+      end
+
+      def add_group_member(response)
+        user  = response.matches[0][0]
+        group = response.matches[0][1]
+
+        response.reply_with_mention(t('replies.add_member.working'))
+        result = add_user_to_group(user, group)
+        response.reply_with_mention(
+          if result.nil?
+            t('replies.add_member.error', user: user, group: group)
+          else
+            t('replies.add_member.success', user: user, group: group)
+          end
+        )
+      end
+
+      def remove_group_member(response)
+        user  = response.matches[0][0]
+        group = response.matches[0][1]
+
+        response.reply_with_mention(t('replies.remove_member.working'))
+        result = remove_user_from_group(user, group)
+        response.reply_with_mention(
+          if result.nil?
+            t('replies.remove_member.error', user: user, group: group)
+          else
+            t('replies.remove_member.success', user: user, group: group)
+          end
+        )
       end
 
       private

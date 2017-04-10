@@ -15,6 +15,12 @@ en:
           group_members:
             syntax: group <groupname> members
             desc: lists all members of the given group
+          add_member:
+            syntax: add <username> to <groupname>
+            desc: add a user to an LDAP group
+          remove_member:
+            syntax: remove <username> from <groupname>
+            desc: remove a user from an LDAP group
         replies:
           user_locked?:
             working: let me check on that
@@ -33,3 +39,11 @@ en:
           group_members:
             working: Give me a second to search
             error: "That did not work, double check the '%{group}' is a valid group name"
+          add_member:
+            working: I'll get that user added
+            error: "That did not work, double check that '%{user}' and '%{group}' are valid"
+            success: "'%{user}' is now a member of '%{group}'"
+          remove_member:
+            working: Give me just a second to remove that user from the group
+            error: "That did not work, double check that '%{user}' and '%{group}' are valid"
+            success: "'%{user}' is no longer a member of '%{group}'"
