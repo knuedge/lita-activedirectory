@@ -21,6 +21,7 @@ module Lita
         /^(unlock)\s+(\S+)/i,
         :unlock,
         command: true,
+        restrict_to: :ad_admins,
         help: { t('help.unlock.syntax') => t('help.unlock.desc') }
       )
 
@@ -42,6 +43,7 @@ module Lita
         /^remove\s+(\S+)\s+from\s+(\S+)$/i,
         :remove_group_member,
         command: true,
+        restrict_to: :ad_admins,
         help: { t('help.remove_member.syntax') => t('help.remove_member.desc') }
       )
 
@@ -49,6 +51,7 @@ module Lita
         /^add\s+(\S+)\s+to\s+(\S+)$/i,
         :add_group_member,
         command: true,
+        restrict_to: :ad_admins,
         help: { t('help.add_member.syntax') => t('help.add_member.desc') }
       )
 

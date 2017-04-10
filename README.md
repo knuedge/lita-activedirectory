@@ -1,5 +1,5 @@
 # lita-activedirectory
-[![Build Status](https://travis-ci.org/knuedge/lita-activedirectory.svg?branch=master)](https://travis-ci.org/knuedge/lita-activedirectory) [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license) [![Gem](https://img.shields.io/gem/v/formatador.svg)](https://rubygems.org/gems/lita-activedirectory) [![Code Climate](https://codeclimate.com/github/knuedge/lita-activedirectory/badges/gpa.svg)](https://codeclimate.com/github/knuedge/lita-activedirectory)
+[![Build Status](https://travis-ci.org/knuedge/lita-activedirectory.svg?branch=master)](https://travis-ci.org/knuedge/lita-activedirectory) [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license) [![Gem Version](https://badge.fury.io/rb/lita-activedirectory.svg)](https://badge.fury.io/rb/lita-activedirectory) [![Code Climate](https://codeclimate.com/github/knuedge/lita-activedirectory/badges/gpa.svg)](https://codeclimate.com/github/knuedge/lita-activedirectory)
 
 A [Lita](https://www.lita.io/) handler plugin for basic interactions with Active Directory.
 
@@ -27,6 +27,8 @@ gem "lita-activedirectory"
 
 ### Unlock a user account
 `unlock <username>`
+
+Requires membership in `ad_admins` authorization group.
 
 The user account specified in `config.handlers.activedirectory.username` must have permission to write the lockouttime attribute for unlocking to succeed. We leave it up to you to secure this account accordingly. 
 
