@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-activedirectory'
-  spec.version       = '0.2.9'
-  spec.authors       = ['Daniel Schaaff']
+  spec.version       = '0.3.0'
+  spec.authors       = ['Daniel Schaaff', 'Jonathan Gnagy']
   spec.email         = ['dschaaff@knuedge.com']
   spec.description   = 'ldap/active directory instructions for Lita'
   spec.summary       = 'Allow Lita to interact with Active Directory'
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '~> 2.2'
 
   spec.add_runtime_dependency 'lita', '>= 4.7'
-  spec.add_runtime_dependency 'cratus'
+  spec.add_runtime_dependency 'cratus', '~> 0.5'
 
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'pry-byebug'
