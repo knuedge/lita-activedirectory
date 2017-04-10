@@ -83,5 +83,23 @@ module Utils
         nil
       end
     end
+
+    def disable_ldap_user(username)
+      cratus_connect
+      begin
+        Cratus::User.new(username.to_s).disable
+      rescue
+        nil
+      end
+    end
+
+    def enable_ldap_user(username)
+      cratus_connect
+      begin
+        Cratus::User.new(username.to_s).enable
+      rescue
+        nil
+      end
+    end
   end
 end

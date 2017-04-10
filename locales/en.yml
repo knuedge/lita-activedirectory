@@ -21,6 +21,12 @@ en:
           remove_member:
             syntax: remove <username> from <groupname>
             desc: remove a user from an LDAP group
+          disable_user:
+            syntax: disable user <username>
+            desc: disable an active directory user
+          enable_user:
+            syntax: enable user <username>
+            desc: enable an active directory user
         replies:
           user_locked?:
             working: let me check on that
@@ -47,3 +53,11 @@ en:
             working: Give me just a second to remove that user from the group
             error: "That did not work, double check that '%{user}' and '%{group}' are valid"
             success: "'%{user}' is no longer a member of '%{group}'"
+          disable_user:
+            working: Let's stop that user from logging in then
+            error: "That did not work, double check that '%{user}' is a valid user"
+            success: "'%{user}' is now disabled"
+          enable_user:
+            working: I'll allow this user to login again
+            error: "That did not work, double check that '%{user}' is a valid user"
+            success: "'%{user}' is now enabled"

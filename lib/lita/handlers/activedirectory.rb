@@ -55,6 +55,22 @@ module Lita
         help: { t('help.add_member.syntax') => t('help.add_member.desc') }
       )
 
+      route(
+        /^disable\s+user\s+(\S+)$/i,
+        :disable_user,
+        command: true,
+        restrict_to: :ad_admins,
+        help: { t('help.disable_user.syntax') => t('help.disable_user.desc') }
+      )
+
+      route(
+        /^enable\s+user\s+(\S+)$/i,
+        :enable_user,
+        command: true,
+        restrict_to: :ad_admins,
+        help: { t('help.enable_user.syntax') => t('help.enable_user.desc') }
+      )
+
       include ::Utils::Cratususer
 
       def user_locked?(response)
@@ -126,6 +142,34 @@ module Lita
             t('replies.remove_member.error', user: user, group: group)
           else
             t('replies.remove_member.success', user: user, group: group)
+          end
+        )
+      end
+
+      def disable_user(response)
+        user = response.matches[0][0]
+
+        response.reply_with_mention(t('replies.disable_user.working'))
+        result = disable_ldap_user(user)
+        response.reply_with_mention(
+          if result.nil?
+            t('replies.disable_user.error', user: user)
+          else
+            t('replies.disable_user.success', user: user)
+          end
+        )
+      end
+
+      def enable_user(response)
+        user = response.matches[0][0]
+
+        response.reply_with_mention(t('replies.enable_user.working'))
+        result = enable_ldap_user(user)
+        response.reply_with_mention(
+          if result.nil?
+            t('replies.enable_user.error', user: user)
+          else
+            t('replies.enable_user.success', user: user)
           end
         )
       end
