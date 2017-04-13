@@ -194,12 +194,11 @@ module Lita
       end
 
       def handle_unlock_query(response, user, result)
-        case result
-        when true
+        if result
           response.reply_with_mention(
             t('replies.unlock.success', user: user)
           )
-        when false
+        else
           response.reply_with_mention(
             t('replies.unlock.fail', user: user)
           )
